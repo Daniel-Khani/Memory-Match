@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Match - Candy Pop</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <main class="game-container">
+
+        <h1>🍬 Memory Match</h1>
+        <p class="subtitle">Find all matching pairs!</p>
+
+        <div class="game-info">
+            <div class="info-box">
+                <span>Moves</span>
+                <strong id="moves">0</strong>
+            </div>
+
+            <div class="info-box">
+                <span>Time</span>
+                <strong id="timer">00:00</strong>
+            </div>
+
+            <div class="info-box">
+                <span>Pairs</span>
+                <strong id="pairs">0 / 8</strong>
+            </div>
+        </div>
+
+        <div id="game-board" class="game-board"></div>
+
+        <button id="restart-btn" type="button">
+            🔄 Restart Game
+        </button>
+
+        <p id="message" aria-live="polite">
+            Ready? Let's play!
+        </p>
+
+    </main>
+
+</body>
+</html>

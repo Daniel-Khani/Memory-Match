@@ -1,0 +1,290 @@
+/* ===== General Style ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #fff0f6, #e9e3ff, #dff7ff);
+    color: #514267;
+}
+
+/* ===== Game Container ===== */
+.game-container {
+    width: 100%;
+    max-width: 520px;
+    padding: 30px;
+    text-align: center;
+    background: #fff;
+    border: 3px solid #f5d8ef;
+    border-radius: 28px;
+    box-shadow: 0 12px 35px rgba(170, 130, 190, 0.18);
+}
+
+h1 {
+    margin-bottom: 10px;
+    color: #d65c9f;
+    font-size: 2rem;
+}
+
+.subtitle {
+    margin-bottom: 25px;
+    color: #9684ad;
+}
+
+/* ===== Statistics ===== */
+.game-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.info-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 15px 8px;
+    background: #fff0f7;
+    border: 2px solid #f8d8e9;
+    border-radius: 16px;
+}
+
+.info-box span {
+    color: #a17a9c;
+    font-size: 0.85rem;
+}
+
+.info-box strong {
+    color: #cc5797;
+    font-size: 1.3rem;
+}
+
+/* ===== Board ===== */
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+/* ===== Cards ===== */
+.card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    border: none;
+    border-radius: 18px;
+    background: transparent;
+    cursor: pointer;
+    perspective: 1000px;
+    transition: transform 0.2s ease;
+}
+
+.card:hover:not(.matched) {
+    transform: translateY(-3px);
+}
+
+.card:focus-visible {
+    outline: 3px solid #d65c9f;
+    outline-offset: 4px;
+}
+
+.card-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #d9ccff;
+    border-radius: 18px;
+    font-size: 2rem;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: transform 0.5s ease;
+}
+
+/* Candy side */
+.card-front {
+    background: linear-gradient(145deg, #cdbdff, #b8a3f5);
+    box-shadow: 0 5px 0 #a38be0;
+    transform: rotateY(0deg);
+}
+
+/* Emoji side */
+.card-back {
+    background: #fff0f7;
+    border-color: #f2a8d1;
+    box-shadow: 0 5px 0 #e7b4d2;
+    transform: rotateY(180deg);
+}
+
+/* Flip animation */
+.card.flipped .card-front,
+.card.matched .card-front {
+    transform: rotateY(-180deg);
+}
+
+.card.flipped .card-back,
+.card.matched .card-back {
+    transform: rotateY(0deg);
+}
+
+/* Matched cards */
+.card.matched {
+    cursor: default;
+}
+
+.card.matched .card-back {
+    background: #d9f8e7;
+    border-color: #8cdbb0;
+    box-shadow: 0 5px 0 #8cdbb0;
+}
+
+/* ===== Restart Button ===== */
+#restart-btn {
+    margin-top: 5px;
+    padding: 14px 30px;
+    border: 3px solid #d65c9f;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #ff91c8, #e878b3);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #c65391;
+    transition: all 0.2s ease;
+}
+
+#restart-btn:hover {
+    background: linear-gradient(135deg, #e878b3, #d65c9f);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 0 #c65391;
+}
+
+#restart-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #c65391;
+}
+
+/* ===== Message ===== */
+#message {
+    min-height: 24px;
+    margin-top: 22px;
+    color: #a17a9c;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+#message.win-celebration {
+    color: #d65c9f;
+    animation: win-pop 0.65s ease both;
+}
+
+@keyframes win-pop {
+    0% {
+        transform: scale(0.6);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.12);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ===== Candy Rain ===== */
+#candy-rain {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.falling-candy {
+    position: absolute;
+    top: -60px;
+    left: var(--left);
+    font-size: var(--size);
+    animation: candy-fall var(--duration) linear var(--delay) forwards;
+    will-change: transform;
+    filter: drop-shadow(0 3px 3px rgba(100, 50, 100, 0.15));
+}
+
+@keyframes candy-fall {
+    0% {
+        transform: translate3d(0, -10vh, 0) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    50% {
+        transform: translate3d(35px, 50vh, 0) rotate(360deg);
+    }
+
+    100% {
+        transform: translate3d(-25px, 115vh, 0) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 480px) {
+    .game-container {
+        padding: 20px 15px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .game-board {
+        gap: 8px;
+    }
+
+    .card-face {
+        border-radius: 13px;
+        font-size: 1.6rem;
+    }
+
+    .info-box {
+        padding: 12px 5px;
+    }
+
+    .info-box strong {
+        font-size: 1.1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .falling-candy {
+        animation-duration: 3s;
+    }
+
+    #message.win-celebration {
+        animation: none;
+    }
+
+    .card-face,
+    .card,
+    #restart-btn {
+        transition: none;
+    }
+}
